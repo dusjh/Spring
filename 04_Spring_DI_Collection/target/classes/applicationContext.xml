@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  bean태그 속성 
+   - id속성: 요청(호출)시 사용할 명칭(유일한 명칭)
+   - class속성: 필수속성, 대상클래스(패키지.클래스명)
+   - lazy-init: 생성시점을 조정할 때 사용 (기본 - 컨테이너 구동시)
+   - scope: 객체 생성 형태 정의(default는 싱글톤: 하나의 객체 생성 사용)
+      prototype - 요청할 때마다 새로운 객체 생성
+      단, prototype scope인 경우 destroy-method가 적용되지 않는다.
+      - init-method: 객체 생성 후 초기화 필요시 사용
+      - destory-method: 객체 소멸시 처리할 작업설정 
+-->
+	<bean id="collectionBean" class="di_collection.CollectionBean">
+		
+		<!-- List 타입에 대한 설정(의존주입 DI) -->
+		<property name="addressList">
+			<list>
+				<value>서울시 강남구 역삼동</value>
+				<value>서울시 강남구 서초동</value>
+				<value>서울시 강남구 역삼동</value>
+			</list>
+		</property>
+		
+		<!-- Set 타입에 대한 설정(중복값 허용 안함) -->
+		<property name="addressSet">
+			<set value-type="java.lang.String">
+				<value>서울시 강남구 역삼동</value>
+				<value>서울시 강남구 서초동</value>
+				<value>서울시 강남구 서초동</value>
+			</set>
+		</property>
+		
+		<!-- Map<key, value> 타입에 대한 설정 -->
+		<property name="addressMap">
+			<map>
+				<!-- 태그만 사용하는 작성 예 -->
+				<entry>	<!-- entry 타입에는 key, value가 들어있음 -->
+					<key>
+						<value>홍길동</value>
+					</key>
+					<value>서울시 강남구 역삼동</value>
+				</entry>
+				<!-- 속성을 사용하는 방식 -->
+				<entry key="김유신" value="서울시 강남구 서초동" />
+				<entry key="을지문덕" value="서울시 강남구 서초동" />
+			</map>
+		</property>
+		
+		<!-- Properties 타입에 대한 설정(key, value 모두 String) -->
+		<property name="addressProp">
+			<props>
+				<prop key="홍길동">서울시 강남구 역삼동</prop> <!-- <prop></prop> 사이에 value값 -->
+				<prop key="김유신">서울시 강남구 서초동</prop>
+				<prop key="을지문덕">서울시 강남구 서초동</prop>
+			</props>
+		</property>
+			
+	</bean>
+</beans>
