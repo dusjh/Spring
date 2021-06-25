@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  bean태그 속성 
+   - id속성: 요청(호출)시 사용할 명칭(유일한 명칭)
+   - class속성: 필수속성, 대상클래스(패키지.클래스명)
+   - lazy-init: 생성시점을 조정할 때 사용 (기본 - 컨테이너 구동시)
+   - scope: 객체 생성 형태 정의(default는 싱글톤: 하나의 객체 생성 사용)
+      prototype - 요청할 때마다 새로운 객체 생성
+      단, prototype scope인 경우 destroy-method가 적용되지 않는다.
+      - init-method: 객체 생성 후 초기화 필요시 사용
+      - destory-method: 객체 소멸시 처리할 작업설정 
+-->
+	<!-- 생성자를 이용한 의존성 주입(DI) -->
+	<bean id="tv2Samsung" class="polymorphism2.SamsungTV">
+		<constructor-arg ref="sony"></constructor-arg>   <!-- 참조형 데이터타입(ref) -->
+		<constructor-arg value="1000000"></constructor-arg>
+	</bean>
+	
+	<bean id="sony" class="polymorphism2.SonySpeaker" />
+	
+	<!-- 생성자에 전달되는 값 순서 : sony, 200, 100 -->
+	<bean id="tv2Samsung2" class="polymorphism2.SamsungTV">
+		<constructor-arg ref="sony" />
+		<constructor-arg value="200" />
+		<constructor-arg value="100" />
+	</bean>
+	
+	<!-- 인덱스 속성으로 작성순서와 관계없이 순서 지정 가능 -->
+	<bean id="tv2Samsung3" class="polymorphism2.SamsungTV">
+		<constructor-arg index="0" ref="sony" />
+		<constructor-arg index="1" value="200" />
+		<constructor-arg index="2" value="100" />
+	</bean>
+
+</beans>
